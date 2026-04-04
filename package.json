@@ -42,8 +42,8 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/reversecentaur/reversecentaur",
-    "directory": "packages/mcp-server"
+    "url": "https://github.com/ReverseCentaurAI/mcp-server.git",
+    "directory": "."
   },
   "homepage": "https://reversecentaur.ai",
   "engines": {
