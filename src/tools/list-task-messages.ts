@@ -20,6 +20,7 @@ export function registerListTaskMessages(
           .uuid()
           .describe('The task ID returned from post_task'),
       }),
+      annotations: { readOnlyHint: true, destructiveHint: false },
     },
     async (args) => {
       try {

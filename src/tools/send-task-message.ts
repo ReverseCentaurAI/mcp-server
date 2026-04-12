@@ -25,6 +25,7 @@ export function registerSendTaskMessage(
           .max(2000)
           .describe('Message body, 1-2000 characters'),
       }),
+      annotations: { readOnlyHint: false, destructiveHint: false },
     },
     async (args) => {
       try {

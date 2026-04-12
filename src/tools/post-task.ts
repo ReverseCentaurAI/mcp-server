@@ -4,6 +4,7 @@ import type { ApiClient } from '../api-client.js';
 import { mockPostTask } from '../mock.js';
 import { TASK_CATEGORIES, DELIVERABLE_FORMATS, PAYMENT_METHODS } from '../types.js';
 import { toolError } from '../util.js';
+import { computeChargeBreakdown, computeRoundUpSuggestion } from '../fee-breakdown.js';
 
 export function registerPostTask(
   server: McpServer,
@@ -53,6 +54,7 @@ export function registerPostTask(
           .default('stripe')
           .describe('Payment rail: "stripe" (default) or "usdc_base" (direct USDC on Base L2)'),
       }),
+      annotations: { readOnlyHint: false, destructiveHint: true },
     },
     async (args) => {
       try {
@@ -71,9 +73,17 @@ export function registerPostTask(
         if (result.payment_method) {
           lines.push(`Payment method: ${result.payment_method}`);
         }
-        if (result.worker_payout_usd != null && result.platform_fee_usd != null) {
-          lines.push(`Worker payout: $${result.worker_payout_usd.toFixed(2)}`);
-          lines.push(`Platform fee: $${result.platform_fee_usd.toFixed(2)}`);
+        // Full fee breakdown with processing fee pass-through
+        const breakdown = computeChargeBreakdown(result.budget_usd);
+        lines.push(`Total charge: $${breakdown.totalCharge.toFixed(2)}`);
+        lines.push(`  Processing (Stripe): $${breakdown.processingFee.toFixed(2)}`);
+        lines.push(`  Platform fee (15%): $${breakdown.platformFee.toFixed(2)}`);
+        lines.push(`  Worker earns: $${breakdown.workerPayout.toFixed(2)}`);
+
+        const roundUp = computeRoundUpSuggestion(result.budget_usd);
+        if (roundUp) {
+          lines.push('');
+          lines.push(`Round up worker pay to $${roundUp.target_worker_payout_usd.toFixed(2)}? (+$${roundUp.additional_cost_usd.toFixed(2)} total)`);
         }
 
         return {

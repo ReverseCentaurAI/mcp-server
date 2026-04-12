@@ -36,7 +36,7 @@ export function createServer(options: CreateServerOptions = {}): McpServer {
 
   const server = new McpServer({
     name: 'reverse-centaur',
-    version: '0.1.0',
+    version: '0.2.0',
     description:
       'Fair Trade marketplace for AI agents to hire humans. Post tasks requiring human judgment, real-world action, or sensory evaluation.',
   });

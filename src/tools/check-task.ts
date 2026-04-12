@@ -17,6 +17,7 @@ export function registerCheckTask(
       inputSchema: z.object({
         task_id: z.string().describe('The task ID returned from post_task'),
       }),
+      annotations: { readOnlyHint: true, destructiveHint: false },
     },
     async (args) => {
       try {

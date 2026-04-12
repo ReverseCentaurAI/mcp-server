@@ -22,6 +22,7 @@ export function registerCancelTask(
           .optional()
           .describe('Optional reason for cancellation'),
       }),
+      annotations: { readOnlyHint: false, destructiveHint: true },
     },
     async (args) => {
       try {

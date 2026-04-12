@@ -1,10 +1,12 @@
 {
   "name": "reversecentaur-mcp",
-  "version": "0.1.0",
+  "mcpName": "io.github.brandonbgreen/reversecentaur-mcp",
+  "version": "0.2.0",
   "description": "MCP server for the Reverse Centaur platform — let AI agents hire humans ethically",
   "type": "module",
   "bin": {
-    "reversecentaur-mcp": "./dist/index.js"
+    "reversecentaur-mcp": "dist/index.js",
+    "reversecentaur-mcp-http": "dist/http.js"
   },
   "main": "./dist/server.js",
   "types": "./dist/server.d.ts",
@@ -28,8 +30,9 @@
     "zod": "^3.24.0"
   },
   "devDependencies": {
-    "typescript": "^5.7.0",
-    "@types/node": "^22.0.0"
+    "@types/express": "^5.0.6",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0"
   },
   "keywords": [
     "mcp",
@@ -42,7 +45,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ReverseCentaurAI/mcp-server"
+    "url": "git+https://github.com/ReverseCentaurAI/mcp-server.git"
   },
   "homepage": "https://reversecentaur.ai",
   "engines": {

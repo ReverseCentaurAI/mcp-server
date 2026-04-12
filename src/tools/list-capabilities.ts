@@ -15,6 +15,7 @@ export function registerListCapabilities(
       description:
         'List available task categories, fair trade pay minimums, worker availability, and current platform status.',
       inputSchema: z.object({}),
+      annotations: { readOnlyHint: true, destructiveHint: false },
     },
     async () => {
       try {
