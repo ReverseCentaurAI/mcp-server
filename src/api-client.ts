@@ -10,6 +10,9 @@ import type {
   CheckTaskResponse,
   PostTaskInput,
   PostTaskResponse,
+  SendTaskMessageInput,
+  SendTaskMessageResponse,
+  ListTaskMessagesResponse,
 } from './types.js';
 
 export class ApiClient {
@@ -67,6 +70,21 @@ export class ApiClient {
       'POST',
       `/v1/tasks/${encodeURIComponent(taskId)}/cancel`,
       reason ? { reason } : undefined,
+    );
+  }
+
+  async sendTaskMessage(input: SendTaskMessageInput): Promise<SendTaskMessageResponse> {
+    return this.request<SendTaskMessageResponse>(
+      'POST',
+      `/v1/tasks/${encodeURIComponent(input.task_id)}/messages`,
+      { body: input.body },
+    );
+  }
+
+  async listTaskMessages(taskId: string): Promise<ListTaskMessagesResponse> {
+    return this.request<ListTaskMessagesResponse>(
+      'GET',
+      `/v1/tasks/${encodeURIComponent(taskId)}/messages`,
     );
   }
 }

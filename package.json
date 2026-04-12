@@ -1,5 +1,5 @@
 {
-  "name": "@reversecentaur/mcp",
+  "name": "reversecentaur-mcp",
   "version": "0.1.0",
   "description": "MCP server for the Reverse Centaur platform — let AI agents hire humans ethically",
   "type": "module",
@@ -42,8 +42,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ReverseCentaurAI/mcp-server.git",
-    "directory": "."
+    "url": "https://github.com/ReverseCentaurAI/mcp-server"
   },
   "homepage": "https://reversecentaur.ai",
   "engines": {

@@ -2,7 +2,7 @@ import { z } from 'zod';
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import type { ApiClient } from '../api-client.js';
 import { mockPostTask } from '../mock.js';
-import { TASK_CATEGORIES, DELIVERABLE_FORMATS } from '../types.js';
+import { TASK_CATEGORIES, DELIVERABLE_FORMATS, PAYMENT_METHODS } from '../types.js';
 import { toolError } from '../util.js';
 
 export function registerPostTask(
@@ -47,6 +47,11 @@ export function registerPostTask(
           .url()
           .optional()
           .describe('Webhook URL to receive task completion notification'),
+        payment_method: z
+          .enum(PAYMENT_METHODS)
+          .optional()
+          .default('stripe')
+          .describe('Payment rail: "stripe" (default) or "usdc_base" (direct USDC on Base L2)'),
       }),
     },
     async (args) => {
@@ -55,18 +60,27 @@ export function registerPostTask(
           ? await client.postTask(args)
           : mockPostTask(args);
 
+        const lines = [
+          `✅ Task posted: ${result.task_id}`,
+          `Status: ${result.status}`,
+          `Budget: $${result.budget_usd.toFixed(2)}`,
+          `Fair trade minimum met: ${result.fair_trade_minimum_met}`,
+          `Estimated match time: ${result.estimated_match_time_minutes} minutes`,
+          `Deadline: ${result.deadline}`,
+        ];
+        if (result.payment_method) {
+          lines.push(`Payment method: ${result.payment_method}`);
+        }
+        if (result.worker_payout_usd != null && result.platform_fee_usd != null) {
+          lines.push(`Worker payout: $${result.worker_payout_usd.toFixed(2)}`);
+          lines.push(`Platform fee: $${result.platform_fee_usd.toFixed(2)}`);
+        }
+
         return {
           content: [
             {
               type: 'text' as const,
-              text: [
-                `✅ Task posted: ${result.task_id}`,
-                `Status: ${result.status}`,
-                `Budget: $${result.budget_usd.toFixed(2)}`,
-                `Fair trade minimum met: ${result.fair_trade_minimum_met}`,
-                `Estimated match time: ${result.estimated_match_time_minutes} minutes`,
-                `Deadline: ${result.deadline}`,
-              ].join('\n'),
+              text: lines.join('\n'),
             },
           ],
         };

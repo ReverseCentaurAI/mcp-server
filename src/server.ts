@@ -12,6 +12,8 @@ import { registerPostTask } from './tools/post-task.js';
 import { registerCheckTask } from './tools/check-task.js';
 import { registerListCapabilities } from './tools/list-capabilities.js';
 import { registerCancelTask } from './tools/cancel-task.js';
+import { registerSendTaskMessage } from './tools/send-task-message.js';
+import { registerListTaskMessages } from './tools/list-task-messages.js';
 import { registerResources } from './resources.js';
 import type { ApiConfig } from './types.js';
 
@@ -56,6 +58,8 @@ export function createServer(options: CreateServerOptions = {}): McpServer {
   registerCheckTask(server, client);
   registerListCapabilities(server, client);
   registerCancelTask(server, client);
+  registerSendTaskMessage(server, client);
+  registerListTaskMessages(server, client);
 
   // Register resources
   registerResources(server);

@@ -9,6 +9,10 @@ import type {
   CheckTaskResponse,
   PostTaskInput,
   PostTaskResponse,
+  SendTaskMessageInput,
+  SendTaskMessageResponse,
+  ListTaskMessagesResponse,
+  TaskMessageRow,
 } from './types.js';
 
 let mockTaskCounter = 0;
@@ -167,4 +171,30 @@ export function mockCancelTask(taskId: string, _reason?: string): CancelTaskResp
     cancellation_fee_usd: 0,
     message: `Task ${taskId} cancelled successfully (mock mode).`,
   };
+}
+
+const mockMessages = new Map<string, TaskMessageRow[]>();
+let mockMessageCounter = 0;
+
+export function mockSendTaskMessage(input: SendTaskMessageInput): SendTaskMessageResponse {
+  mockMessageCounter++;
+  const row: TaskMessageRow = {
+    id: `mock-msg-${mockMessageCounter.toString().padStart(4, '0')}`,
+    task_id: input.task_id,
+    sender_type: 'agent',
+    sender_worker_id: null,
+    sender_agent_id: 'mock-agent',
+    body: input.body,
+    created_at: new Date().toISOString(),
+    read_by_worker_at: null,
+    read_by_agent_at: new Date().toISOString(),
+  };
+  const existing = mockMessages.get(input.task_id) ?? [];
+  existing.push(row);
+  mockMessages.set(input.task_id, existing);
+  return { message: row };
+}
+
+export function mockListTaskMessages(taskId: string): ListTaskMessagesResponse {
+  return { messages: mockMessages.get(taskId) ?? [] };
 }

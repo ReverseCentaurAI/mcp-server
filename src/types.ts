@@ -39,6 +39,9 @@ export type TaskCategory = (typeof TASK_CATEGORIES)[number];
 export type DeliverableFormat = (typeof DELIVERABLE_FORMATS)[number];
 export type TaskStatus = (typeof TASK_STATUSES)[number];
 
+export const PAYMENT_METHODS = ['stripe', 'usdc_base'] as const;
+export type PaymentMethod = (typeof PAYMENT_METHODS)[number];
+
 export interface PostTaskInput {
   title: string;
   description: string;
@@ -47,6 +50,7 @@ export interface PostTaskInput {
   deadline_minutes?: number;
   deliverable_format?: DeliverableFormat;
   callback_url?: string;
+  payment_method?: PaymentMethod;
 }
 
 export interface PostTaskResponse {
@@ -57,6 +61,9 @@ export interface PostTaskResponse {
   estimated_match_time_minutes: number;
   deadline: string;
   created_at: string;
+  payment_method?: PaymentMethod;
+  worker_payout_usd?: number;
+  platform_fee_usd?: number;
 }
 
 export interface TaskResult {
@@ -113,4 +120,31 @@ export interface ApiConfig {
   baseUrl: string;
   apiKey: string;
   mockMode: boolean;
+}
+
+// === Task messaging ===
+
+export interface TaskMessageRow {
+  id: string;
+  task_id: string;
+  sender_type: 'worker' | 'agent' | 'system';
+  sender_worker_id: string | null;
+  sender_agent_id: string | null;
+  body: string;
+  created_at: string;
+  read_by_worker_at: string | null;
+  read_by_agent_at: string | null;
+}
+
+export interface SendTaskMessageInput {
+  task_id: string;
+  body: string;
+}
+
+export interface SendTaskMessageResponse {
+  message: TaskMessageRow;
+}
+
+export interface ListTaskMessagesResponse {
+  messages: TaskMessageRow[];
 }
