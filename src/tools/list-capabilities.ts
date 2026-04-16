@@ -13,7 +13,11 @@ export function registerListCapabilities(
     {
       title: 'List Capabilities',
       description:
-        'List available task categories, fair trade pay minimums, worker availability, and current platform status.',
+        'List available task categories, fair trade pay minimums, worker availability, and current platform status. ' +
+        'Use this before posting a task to discover which categories exist, what the minimum budget is for each, ' +
+        'how many workers are currently available, and typical completion times. Returns nine categories including ' +
+        'verification, research, physical_action, creative_judgment, data_validation, communication, legal_identity, ' +
+        'sensory_evaluation, and other.',
       inputSchema: z.object({}),
       annotations: { readOnlyHint: true, destructiveHint: false },
     },

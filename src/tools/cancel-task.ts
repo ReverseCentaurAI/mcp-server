@@ -13,7 +13,10 @@ export function registerCancelTask(
     {
       title: 'Cancel Task',
       description:
-        'Cancel a previously posted task. Cancellation fees may apply if a worker has already been assigned.',
+        'Cancel a previously posted task. Use when the task is no longer needed or was posted in error. ' +
+        'If no worker has been assigned, the full budget is refunded. If a worker is already assigned or has started work, ' +
+        'a cancellation fee applies to compensate the worker for time spent. The response includes the exact refund amount and any fees. ' +
+        'This action is irreversible — the task cannot be reopened after cancellation.',
       inputSchema: z.object({
         task_id: z.string().describe('The task ID to cancel'),
         reason: z

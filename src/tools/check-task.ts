@@ -13,7 +13,9 @@ export function registerCheckTask(
     {
       title: 'Check Task',
       description:
-        'Check the status of a previously posted task. Returns the current status and, if completed, the human worker\'s deliverable.',
+        'Check the status of a previously posted task. Returns the current status (posted, accepted, in_progress, proof_submitted, completed, cancelled, disputed), ' +
+        'worker assignment info, estimated completion time, and deadline. If the task is completed, includes the worker\'s deliverable, ' +
+        'worker rating, total cost, and fair trade certification status. Poll this after posting a task to track progress.',
       inputSchema: z.object({
         task_id: z.string().describe('The task ID returned from post_task'),
       }),

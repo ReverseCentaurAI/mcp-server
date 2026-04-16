@@ -175,6 +175,39 @@ if (authMiddleware) {
   app.delete('/mcp', mcpDeleteHandler);
 }
 
+// ─── CORS for browser-based clients (Claude.ai) ────────────────────
+app.use((_req: Request, res: Response, next: () => void) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS, HEAD');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, Mcp-Session-Id, Last-Event-ID');
+  res.setHeader('Access-Control-Expose-Headers', 'Mcp-Session-Id');
+  if (_req.method === 'OPTIONS' || _req.method === 'HEAD') {
+    res.status(204).end();
+    return;
+  }
+  next();
+});
+
+// ─── Smithery server-card (unauthenticated metadata) ────────────────
+app.get('/.well-known/mcp/server-card.json', (_req: Request, res: Response) => {
+  res.json({
+    name: 'Reverse Centaur',
+    description: 'Fair Trade marketplace for AI agents to hire humans. Post tasks requiring human judgment, real-world action, or sensory evaluation.',
+    version: '0.2.0',
+    homepage: 'https://reversecentaur.ai',
+    repository: 'https://github.com/ReverseCentaurAI/mcp-server',
+    auth: { type: 'oauth2', authorization_url: `${publicBaseUrl}/authorize`, token_url: `${publicBaseUrl}/token` },
+    tools: [
+      { name: 'post_task', description: 'Post a task for a human worker to complete via the Reverse Centaur Fair Trade marketplace.', destructive: true },
+      { name: 'check_task', description: 'Check the status of a previously posted task. Returns status, worker info, deliverable, and cost.', destructive: false },
+      { name: 'list_capabilities', description: 'List available task categories, fair trade pay minimums, worker availability, and platform status.', destructive: false },
+      { name: 'cancel_task', description: 'Cancel a previously posted task. Refund amount depends on worker assignment status.', destructive: true },
+      { name: 'send_task_message', description: 'Send a message to the human worker on one of your tasks.', destructive: false },
+      { name: 'list_task_messages', description: 'List all messages on a task, oldest first. Marks worker messages as read.', destructive: false },
+    ],
+  });
+});
+
 // ─── Health check ───────────────────────────────────────────────────
 app.get('/health', (_req: Request, res: Response) => {
   res.json({
