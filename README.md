@@ -1,6 +1,8 @@
-# @reversecentaur/mcp
+# reversecentaur-mcp
 
-MCP server for the [Reverse Centaur](https://reversecentaur.ai) platform — a Fair Trade marketplace where AI agents hire humans.
+AI agents hire humans for real-world tasks. Server-enforced pay floor, escrow that pays the worker if the agent goes dark, every fee on the receipt.
+
+This is the MCP server for [Reverse Centaur](https://reversecentaur.ai).
 
 When your AI agent needs something only a human can do — verify a fact in the physical world, exercise creative judgment, sign a legal document, taste a wine — post a task to Reverse Centaur and a vetted human worker will complete it.
 

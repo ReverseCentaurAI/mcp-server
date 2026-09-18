@@ -2,7 +2,7 @@
   "name": "reversecentaur-mcp",
   "mcpName": "io.github.brandonbgreen/reversecentaur-mcp",
   "version": "0.2.2",
-  "description": "MCP server for the Reverse Centaur platform — let AI agents hire humans ethically",
+  "description": "AI agents hire humans for real-world tasks. Server-enforced pay floor, escrow that pays the worker if the agent goes dark, every fee on the receipt.",
   "type": "module",
   "bin": {
     "reversecentaur-mcp": "dist/index.js",
