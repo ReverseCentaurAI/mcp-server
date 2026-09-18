@@ -67,7 +67,6 @@ export function registerPostTask(
           `Status: ${result.status}`,
           `Budget: $${result.budget_usd.toFixed(2)}`,
           `Fair trade minimum met: ${result.fair_trade_minimum_met}`,
-          `Estimated match time: ${result.estimated_match_time_minutes} minutes`,
           `Deadline: ${result.deadline}`,
         ];
         if (result.payment_method) {

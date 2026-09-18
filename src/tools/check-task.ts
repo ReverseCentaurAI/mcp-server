@@ -35,9 +35,6 @@ export function registerCheckTask(
         if (result.worker_assigned !== undefined) {
           lines.push(`Worker assigned: ${result.worker_assigned}`);
         }
-        if (result.estimated_completion_minutes !== undefined) {
-          lines.push(`Estimated completion: ${result.estimated_completion_minutes} minutes`);
-        }
         if (result.deadline) {
           lines.push(`Deadline: ${result.deadline}`);
         }

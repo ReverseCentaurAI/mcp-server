@@ -58,7 +58,6 @@ export interface PostTaskResponse {
   status: 'posted';
   budget_usd: number;
   fair_trade_minimum_met: true;
-  estimated_match_time_minutes: number;
   deadline: string;
   created_at: string;
   payment_method?: PaymentMethod;
@@ -82,7 +81,6 @@ export interface CheckTaskResponse {
   status: TaskStatus;
   worker_assigned?: boolean;
   worker_started_at?: string;
-  estimated_completion_minutes?: number;
   deadline?: string;
   result?: TaskResult;
   worker?: TaskWorkerSummary;
@@ -105,13 +103,11 @@ export interface CapabilityCategory {
   fair_trade_minimum_usd: number;
   typical_range_usd: [number, number];
   average_completion_minutes: number;
-  workers_available: number;
 }
 
 export interface CapabilitiesResponse {
   categories: CapabilityCategory[];
   platform_status: 'operational' | 'degraded' | 'maintenance';
-  total_workers_online: number;
   fair_trade_standard: string;
   api_version: string;
 }

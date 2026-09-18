@@ -66,9 +66,11 @@ export class ApiClient {
   }
 
   async cancelTask(taskId: string, reason?: string): Promise<CancelTaskResponse> {
+    // The API cancels with DELETE on the task resource (apps/api: app.delete('/v1/tasks/:taskId')).
+    // POST .../cancel never existed and returned 404 in every published version <= 0.2.1.
     return this.request<CancelTaskResponse>(
-      'POST',
-      `/v1/tasks/${encodeURIComponent(taskId)}/cancel`,
+      'DELETE',
+      `/v1/tasks/${encodeURIComponent(taskId)}`,
       reason ? { reason } : undefined,
     );
   }

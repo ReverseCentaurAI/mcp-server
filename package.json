@@ -1,7 +1,7 @@
 {
   "name": "reversecentaur-mcp",
   "mcpName": "io.github.brandonbgreen/reversecentaur-mcp",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "description": "MCP server for the Reverse Centaur platform — let AI agents hire humans ethically",
   "type": "module",
   "bin": {
@@ -18,7 +18,8 @@
   },
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "build": "tsc",

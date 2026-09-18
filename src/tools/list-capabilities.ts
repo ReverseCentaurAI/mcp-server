@@ -29,7 +29,6 @@ export function registerListCapabilities(
 
         const lines = [
           `Platform status: ${result.platform_status}`,
-          `Workers online: ${result.total_workers_online}`,
           `Fair trade standard: ${result.fair_trade_standard}`,
           `API version: ${result.api_version}`,
           '',
@@ -43,7 +42,6 @@ export function registerListCapabilities(
           lines.push(`  Fair trade minimum: $${cat.fair_trade_minimum_usd.toFixed(2)}`);
           lines.push(`  Typical range: $${cat.typical_range_usd[0].toFixed(2)} – $${cat.typical_range_usd[1].toFixed(2)}`);
           lines.push(`  Avg completion: ${cat.average_completion_minutes} min`);
-          lines.push(`  Workers available: ${cat.workers_available}`);
           lines.push('');
         }
 
